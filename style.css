@@ -1,0 +1,148 @@
+@import url('https://fonts.googleapis.com/css?family=Permanent+Marker');
+@import url('https://fonts.googleapis.com/css?family=Pacifico');
+@import url('https://fonts.googleapis.com/css?family=Comfortaa');
+
+* {
+  margin:0;
+  padding:0;
+}
+
+nav {
+  background-color: #f2f2f2;
+}
+.row {
+  margin:0;
+  padding:0;
+}
+.col {
+  margin:0;
+  padding:0;
+}
+.l6 {
+  margin:0;
+  padding:0;
+}
+.m6 {
+  margin:0;
+  padding:0;
+}
+.s6 {
+  margin:0;
+  padding:0;
+}
+div {
+  margin:0;
+  padding:0;
+}
+textarea:focus {
+  outline-color: #4CAF50;
+}
+button {
+  margin:0;
+  padding:0;
+}
+a:hover {
+  font-size:24px;
+}
+.btn {
+  font-family: arial;
+  text-transform: lowercase;
+  width: 100%;
+  background-color: #4CAF50;
+  margin: none;
+}
+.btn:hover {
+  font-family: arial;
+  text-transform: lowercase;
+  width: 100%;
+  background-color: #4CAF50;
+  margin: none;
+}
+.btn:focus {
+  font-family: arial;
+  text-transform: lowercase;
+  width: 100%;
+  background-color: #4CAF50;
+  margin: none;
+}
+.wrapper {
+  text-align:;
+}
+.logo {
+  text-align: center;
+  color:#757575;
+  font-family: Comfortaa;
+  font-weight: bold;
+}
+.lyric-logo {
+  color:#4CAF50;
+  font-size:30px;
+}
+.spark-logo {
+  color:#757575;
+  font-size:30px;
+}
+.fa-lightbulb-o {
+  font-size:26px;
+  margin:0 2px;
+  color:#4CAF50;
+}
+.left-option-bar {
+  background-color:#4CAF50;
+  margin:0;
+  padding:0;
+  text-align: center;
+  color: white;
+  border: 1px #f2f2f2 solid;
+  border-bottom: 0px;
+  font-family: Comfortaa;
+  font-size: 18px;
+}
+.right-option-bar {
+  background-color:#4CAF50;
+  margin:0;
+  padding:0;
+  text-align: center;
+  color: white;
+  border: 1px #f2f2f2 solid;
+  border-bottom: 0px;
+  font-family: Comfortaa;
+  font-size:18px;
+}
+.rhyme-row-outer {
+  overflow: scroll;
+  width:100%;
+}
+.next-word-row-outer {
+  overflow: scroll;
+  width:100%;
+}
+.rhyme-row {
+  font-size: 20px;
+  padding-left: 30px;
+  border:2px #4CAF50 dotted;
+  border-bottom:;
+  display:none;
+  line-height: 50px;
+  width:10000px;
+}
+.next-word-row {
+  font-size: 20px;
+  padding-left: 30px;
+  border:2px #4CAF50 dotted;
+  border-bottom:;
+  display:none;
+  line-height: 50px;
+  width:10000px;
+}
+::-webkit-scrollbar {
+    display: none;
+}
+.the-text-area {
+  width:100%;
+  text-align: center;
+  font-size: 20px;
+  height:300px;
+  padding: 20px 0;
+  color: #757575;
+}
