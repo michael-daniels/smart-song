@@ -1,0 +1,39 @@
+@import url('https://fonts.googleapis.com/css?family=Permanent+Marker');
+@import url('https://fonts.googleapis.com/css?family=Pacifico');
+@import url('https://fonts.googleapis.com/css?family=Comfortaa');
+
+body {
+  background-image: url('http://i.vimeocdn.com/video/449854939_1280x720.jpg');
+  background-size:;
+  text-align: center;
+}
+.banner {
+  box-shadow: 1px 1px 15px gray;
+}
+.logo {
+  color:#757575;
+  font-family: Comfortaa;
+  font-weight: bold;
+  margin-top:35vh;
+  background-color: #f2f2f2;
+
+}
+.lyric-logo {
+  color:#4CAF50;
+  font-size:50px;
+}
+.spark-logo {
+  color:#757575;
+  font-size:50px;
+}
+.fa-lightbulb-o {
+  font-size:46px;
+  margin:0 2px;
+  color:#4CAF50;
+}
+.tagline {
+  font-family: Comfortaa;
+  font-size: 18px;
+  color: #757575;
+  background-color: #f2f2f2;
+}
