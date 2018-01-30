@@ -6,7 +6,7 @@ document.forms.theForm.textInput.value = localStorage.getItem("smartsong-save");
 document.forms.theForm.textInput.addEventListener('input', function() {
   let theTextAreaContent = document.forms.theForm.textInput.value;
   console.log(theTextAreaContent);
-  localStorage.setItem("smartsong-save-1", theTextAreaContent);
+  localStorage.setItem("smartsong-save", theTextAreaContent);
 })
 
 
