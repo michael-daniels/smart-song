@@ -1,6 +1,22 @@
 
 function getClickedWord(wordId) {
-  console.log(document.getElementById(wordId).innerHTML);
+  let theClickedWord = document.getElementById(wordId).innerHTML;
+  let selStart = document.forms.theForm.textInput.selectionStart;
+  //let selEnd = document.forms.theForm.textInput.selectionEnd;
+
+  console.log(selStart);
+  //console.log(selEnd);
+
+  let textAreaArray = document.forms.theForm.textInput.value.split('');
+
+  console.log(textAreaArray);
+  console.log(theClickedWord);
+  textAreaArray[selStart] = theClickedWord;
+
+  console.log(textAreaArray);
+
+  document.forms.theForm.textInput.value = textAreaArray.join('');
+
 
 }
 
@@ -27,7 +43,7 @@ document.getElementById('rhymeButton').addEventListener('click', function() {
           // let responseLength = data.length;
           // let randomResponse = Math.floor(Math.random() * ((20 - 1) - 0 + 1)) + 0;
           // let theWord = data[randomResponse].word;
-          console.log(data);
+          //console.log(data);
 
           if (data.length === 0) {
             document.getElementById('rhymeRow').innerHTML = "No results found..."
@@ -35,7 +51,7 @@ document.getElementById('rhymeButton').addEventListener('click', function() {
 
             for (i = 0; i < data.length; i++) {
               let rhymeRowTemplate = ` <a id="rhyme${i + 1}" href="#" onclick="getClickedWord('rhyme${i + 1}')">${data[i].word}</a> |`;
-              console.log(rhymeRowTemplate);
+              //console.log(rhymeRowTemplate);
               document.getElementById('rhymeRow').innerHTML += rhymeRowTemplate;
             }
 
@@ -73,7 +89,7 @@ document.getElementById('nextWordButton').addEventListener('click', function() {
           // let responseLength = data.length;
           // let randomResponse = Math.floor(Math.random() * ((20 - 1) - 0 + 1)) + 0;
           // let theWord = data[randomResponse].word;
-          console.log(data);
+          //console.log(data);
 
           if (data.length === 0) {
             document.getElementById('nextWordRow').innerHTML = "No results found..."
@@ -81,7 +97,7 @@ document.getElementById('nextWordButton').addEventListener('click', function() {
 
           for (i = 0; i < data.length; i++) {
             let nextWordRowTemplate = ` <a id="nextWord${i + 1}" href="#" onclick="getClickedWord('nextWord${i + 1}')">${data[i].word}</a> |`;
-            console.log(nextWordRowTemplate);
+            //console.log(nextWordRowTemplate);
             document.getElementById('nextWordRow').innerHTML += nextWordRowTemplate;
           }
         }
