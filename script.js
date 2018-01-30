@@ -38,9 +38,16 @@ document.getElementById('rhymeButton').addEventListener('click', function() {
   document.getElementById('rhymeRow').innerHTML = "";
 
   let wordToRhyme = document.getSelection().toString();
-  //console.log(wordToRhyme);
 
-  fetch('https://api.datamuse.com/words?rel_rhy=' + wordToRhyme)
+  let wordLastTyped;
+  wordLastTyped = document.forms.theForm.textInput.value.split(' ');
+  wordLastTyped = wordLastTyped[wordLastTyped.length - 1];
+
+  console.log("Word to rhyme: ", wordToRhyme);
+  console.log("Last word typed: ", wordLastTyped);
+  console.log("API Call URL",`https://api.datamuse.com/words?rel_rhy=${wordToRhyme}&lc=${wordLastTyped}`)
+
+  fetch(`https://api.datamuse.com/words?rel_rhy=${wordToRhyme}&lc=${wordLastTyped}`)
     .then(
       function(response) {
         if (response.status !== 200) {
@@ -113,9 +120,6 @@ document.getElementById('nextWordButton').addEventListener('click', function() {
 
 });
 //--------------------
-
-
-//get entire value of textarea and split it to an array, assign to variable
 
 
 //get highlighted word and word to the left of highlighted word, assign to variables
