@@ -1,4 +1,15 @@
 
+
+
+document.forms.theForm.textInput.value = localStorage.getItem("smartsong-save-1");
+
+document.forms.theForm.textInput.addEventListener('input', function() {
+  let theTextAreaContent = document.forms.theForm.textInput.value;
+  console.log(theTextAreaContent);
+  localStorage.setItem("smartsong-save-1", theTextAreaContent);
+})
+
+
 function getClickedWord(wordId) {
   let theClickedWord = document.getElementById(wordId).innerHTML;
   let selStart = document.forms.theForm.textInput.selectionStart;
@@ -11,7 +22,7 @@ function getClickedWord(wordId) {
 
   console.log(textAreaArray);
   console.log(theClickedWord);
-  textAreaArray[selStart] = theClickedWord;
+  textAreaArray[selStart] = theClickedWord + " ";
 
   console.log(textAreaArray);
 
@@ -38,11 +49,7 @@ document.getElementById('rhymeButton').addEventListener('click', function() {
           return;
         }
 
-        // Examine the text in the response
         response.json().then(function(data) {
-          // let responseLength = data.length;
-          // let randomResponse = Math.floor(Math.random() * ((20 - 1) - 0 + 1)) + 0;
-          // let theWord = data[randomResponse].word;
           //console.log(data);
 
           if (data.length === 0) {
@@ -84,12 +91,7 @@ document.getElementById('nextWordButton').addEventListener('click', function() {
           return;
         }
 
-        // Examine the text in the response
         response.json().then(function(data) {
-          // let responseLength = data.length;
-          // let randomResponse = Math.floor(Math.random() * ((20 - 1) - 0 + 1)) + 0;
-          // let theWord = data[randomResponse].word;
-          //console.log(data);
 
           if (data.length === 0) {
             document.getElementById('nextWordRow').innerHTML = "No results found..."
