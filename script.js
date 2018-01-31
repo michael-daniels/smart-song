@@ -1,12 +1,42 @@
+// localStorage.setItem("smartsong-save196234-2", "");
+// localStorage.setItem("smartsong-save196234-3", "");
+
+document.getElementById('createNewTab').addEventListener("click", function(){
+    console.log("Hello World");
+});
 
 
+function checkSavedContent() {
+  //this function loops to check local storage for save names up to i. As long as the save names continue to be found, they are inserted in the save list for the user to select and have an inline onclick event attached to them. As soon as it returns null for one, break out of the loop which will stop population of the save list.
+  for (i = 1; i < 100; i++) {
+    if (localStorage.getItem(`smartsong-save196234-${i}`) === null) {
+      break;
+    } else {
+      document.getElementById('saveList').innerHTML += `<a href="#"><div id="save-${i}" class="save-list-item" onclick="populateSavedContentOnSaveClick(${i})">Song ${i}</div></a>`;
 
-document.forms.theForm.textInput.value = localStorage.getItem("smartsong-save");
+    }
+  }
+}
+checkSavedContent();
 
-document.forms.theForm.textInput.addEventListener('input', function() {
+let lastSaveLoaded = 1;
+
+function populateSavedContentOnLoad() {
+  //this function load save number 1 on document load
+  document.forms.theForm.textInput.value = localStorage.getItem(`smartsong-save196234-${lastSaveLoaded}`);
+}
+populateSavedContentOnLoad();
+
+function populateSavedContentOnSaveClick(numberPassedFromSaveList) {
+  //this takes the dynamically created save number that the user clicked on and will retrieve that saved content from local storage and populate it into the text area for editing
+  lastSaveLoaded = numberPassedFromSaveList;
+  document.forms.theForm.textInput.value = localStorage.getItem(`smartsong-save196234-${lastSaveLoaded}`);
+}
+
+
+document.forms.theForm.textInput.addEventListener('change', function() {
   let theTextAreaContent = document.forms.theForm.textInput.value;
-  console.log(theTextAreaContent);
-  localStorage.setItem("smartsong-save", theTextAreaContent);
+  localStorage.setItem(`smartsong-save196234-${lastSaveLoaded}`, theTextAreaContent);
 })
 
 
@@ -45,7 +75,7 @@ document.getElementById('rhymeButton').addEventListener('click', function() {
 
   console.log("Word to rhyme: ", wordToRhyme);
   console.log("Last word typed: ", wordLastTyped);
-  console.log("API Call URL",`https://api.datamuse.com/words?rel_rhy=${wordToRhyme}&lc=${wordLastTyped}`)
+  //console.log("API Call URL",`https://api.datamuse.com/words?rel_rhy=${wordToRhyme}&lc=${wordLastTyped}`)
 
   fetch(`https://api.datamuse.com/words?rel_rhy=${wordToRhyme}&lc=${wordLastTyped}`)
     .then(
@@ -64,7 +94,7 @@ document.getElementById('rhymeButton').addEventListener('click', function() {
           } else {
 
             for (i = 0; i < data.length; i++) {
-              let rhymeRowTemplate = ` <a id="rhyme${i + 1}" href="#" onclick="getClickedWord('rhyme${i + 1}')">${data[i].word}</a> |`;
+              let rhymeRowTemplate = ` <a id="rhyme${i + 1}" href="#" class="rhyme-row-template" onclick="getClickedWord('rhyme${i + 1}')">${data[i].word}</a> |`;
               //console.log(rhymeRowTemplate);
               document.getElementById('rhymeRow').innerHTML += rhymeRowTemplate;
             }
@@ -105,7 +135,7 @@ document.getElementById('nextWordButton').addEventListener('click', function() {
           } else {
 
           for (i = 0; i < data.length; i++) {
-            let nextWordRowTemplate = ` <a id="nextWord${i + 1}" href="#" onclick="getClickedWord('nextWord${i + 1}')">${data[i].word}</a> |`;
+            let nextWordRowTemplate = ` <a id="nextWord${i + 1}" href="#" class="next-word-row-template" onclick="getClickedWord('nextWord${i + 1}')">${data[i].word}</a> |`;
             //console.log(nextWordRowTemplate);
             document.getElementById('nextWordRow').innerHTML += nextWordRowTemplate;
           }

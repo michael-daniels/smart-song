@@ -10,6 +10,9 @@
 nav {
   background-color: #f2f2f2;
 }
+list {
+
+}
 .row {
   margin:0;
   padding:0;
@@ -41,8 +44,18 @@ button {
   margin:0;
   padding:0;
 }
+a {
+  color:#757575;
+}
 a:hover {
-  font-size:24px;
+  color:#4CAF50;
+}
+a > .save-list-item {
+  color:#4CAF50;
+}
+a > .save-list-item:hover {
+  box-shadow: 1px 1px 10px gray;
+  font-size:14.5px;
 }
 .btn {
   font-family: arial;
@@ -92,6 +105,28 @@ a:hover {
   font-size:26px;
   margin:0 2px;
   color:#4CAF50;
+}
+.save-list {
+  background-color:#f2f2f2;
+  margin-top:;
+}
+.save-list-item {
+  background-color: #f0f0f0;
+  display:inline-block;
+  padding:2px 20px;
+  border: 1px gray solid;
+  border-top-left-radius: 7px;
+  border-top-right-radius: 7px;
+  font-family:Comfortaa;
+}
+.save-list-item:hover {
+  background-color: #f0f0f0;
+  display:inline-block;
+  padding:2px 20px;
+  border: 1px gray solid;
+  border-top-left-radius: 7px;
+  border-top-right-radius: 7px;
+  font-family:Comfortaa;
 }
 .left-option-bar {
   background-color:#4CAF50;
