@@ -1,10 +1,3 @@
-// localStorage.setItem("smartsong-save196234-2", "");
-// localStorage.setItem("smartsong-save196234-3", "");
-
-document.getElementById('createNewTab').addEventListener("click", function(){
-    console.log("Hello World");
-});
-
 
 function checkSavedContent() {
   //this function loops to check local storage for save names up to i. As long as the save names continue to be found, they are inserted in the save list for the user to select and have an inline onclick event attached to them. As soon as it returns null for one, break out of the loop which will stop population of the save list.
@@ -19,6 +12,40 @@ function checkSavedContent() {
 }
 checkSavedContent();
 
+//Add click listener to plus tab, loop over current local storage keys from least to greatest, once one is not found, create a slot in storage from which a tab will be created.
+document.getElementById('createNewTab').addEventListener('click', function(){
+
+    let newTabNumber = localStorage.length + 1;
+
+    localStorage.setItem(`smartsong-save196234-${newTabNumber}`, "");
+
+    let anchorTag = document.createElement('a');
+    anchorTag.href="#";
+
+    let divSaveNumber = document.createElement('div');
+    divSaveNumber.id = `save-${newTabNumber}`;
+    divSaveNumber.classList.add('save-list-item');
+    divSaveNumber.onclick = function(){
+      populateSavedContentOnSaveClick(newTabNumber);
+    }
+    divSaveNumber.innerText = `Song ${newTabNumber}`;
+
+    anchorTag.appendChild(divSaveNumber);
+    document.getElementById('saveList').appendChild(anchorTag);
+
+    // for (i = 1; i < 5; i++) {
+    //
+    //   if (localStorage.getItem(`smartsong-save196234-${i}`) === null) {
+    //
+    //     localStorage.setItem(`smartsong-save196234-${i}`, "");
+    //
+    //     document.getElementById('saveList').innerHTML += `<a href="#"><div id="save-${i}" class="save-list-item" onclick="populateSavedContentOnSaveClick(${i})">Song ${i}</div></a>`;
+    //     return;
+    //   }
+    // }
+
+});
+
 let lastSaveLoaded = 1;
 
 function populateSavedContentOnLoad() {
@@ -28,18 +55,18 @@ function populateSavedContentOnLoad() {
 populateSavedContentOnLoad();
 
 function populateSavedContentOnSaveClick(numberPassedFromSaveList) {
-  //this takes the dynamically created save number that the user clicked on and will retrieve that saved content from local storage and populate it into the text area for editing
+  //this takes the dynamically created save number from the save list that the user clicked on and will retrieve that saved content from local storage and populate it into the text area for editing
   lastSaveLoaded = numberPassedFromSaveList;
   document.forms.theForm.textInput.value = localStorage.getItem(`smartsong-save196234-${lastSaveLoaded}`);
 }
 
-
-document.forms.theForm.textInput.addEventListener('change', function() {
+//This event autosaves the tab contents to local storage every time the contents of the text area are changed. It uses the variable lastSaveLoaded to track which save was last clicked by the user (which means thats whats showing in the text area) to determine which local storage key to save the content to.
+document.forms.theForm.textInput.addEventListener('input', function() {
   let theTextAreaContent = document.forms.theForm.textInput.value;
   localStorage.setItem(`smartsong-save196234-${lastSaveLoaded}`, theTextAreaContent);
 })
 
-
+//This function gets the word that the user clicks from the results and inserts it where the users cursor was last placed in the text area.
 function getClickedWord(wordId) {
   let theClickedWord = document.getElementById(wordId).innerHTML;
   let selStart = document.forms.theForm.textInput.selectionStart;
@@ -61,7 +88,7 @@ function getClickedWord(wordId) {
 
 }
 
-//feature toggle ----
+//feature toggle - these events toggle which feature is showing on click of the features button and also perform the API fetch and returns the results.
 document.getElementById('rhymeButton').addEventListener('click', function() {
   document.getElementById('nextWordRow').style.display = "none";
   document.getElementById('rhymeRow').style.display = "block";
@@ -149,6 +176,7 @@ document.getElementById('nextWordButton').addEventListener('click', function() {
     });
 
 });
+
 //--------------------
 
 
