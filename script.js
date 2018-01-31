@@ -3,10 +3,9 @@ function checkSavedContent() {
   //this function loops to check local storage for save names up to i. As long as the save names continue to be found, they are inserted in the save list for the user to select and have an inline onclick event attached to them. As soon as it returns null for one, break out of the loop which will stop population of the save list.
   for (i = 1; i < 100; i++) {
     if (localStorage.getItem(`smartsong-save196234-${i}`) === null) {
-      break;
+      return;
     } else {
       document.getElementById('saveList').innerHTML += `<a href="#"><div id="save-${i}" class="save-list-item" onclick="populateSavedContentOnSaveClick(${i})">Song ${i}</div></a>`;
-
     }
   }
 }
@@ -33,17 +32,6 @@ document.getElementById('createNewTab').addEventListener('click', function(){
     anchorTag.appendChild(divSaveNumber);
     document.getElementById('saveList').appendChild(anchorTag);
 
-    // for (i = 1; i < 5; i++) {
-    //
-    //   if (localStorage.getItem(`smartsong-save196234-${i}`) === null) {
-    //
-    //     localStorage.setItem(`smartsong-save196234-${i}`, "");
-    //
-    //     document.getElementById('saveList').innerHTML += `<a href="#"><div id="save-${i}" class="save-list-item" onclick="populateSavedContentOnSaveClick(${i})">Song ${i}</div></a>`;
-    //     return;
-    //   }
-    // }
-
 });
 
 let lastSaveLoaded = 1;
@@ -60,11 +48,32 @@ function populateSavedContentOnSaveClick(numberPassedFromSaveList) {
   document.forms.theForm.textInput.value = localStorage.getItem(`smartsong-save196234-${lastSaveLoaded}`);
 }
 
-//This event autosaves the tab contents to local storage every time the contents of the text area are changed. It uses the variable lastSaveLoaded to track which save was last clicked by the user (which means thats whats showing in the text area) to determine which local storage key to save the content to.
+//This event autosaves the tab contents to local storage every time the contents of the text area are changed. It uses the variable lastSaveLoaded to track which save was last clicked by the user to determine which local storage key to save the content to.
 document.forms.theForm.textInput.addEventListener('input', function() {
   let theTextAreaContent = document.forms.theForm.textInput.value;
   localStorage.setItem(`smartsong-save196234-${lastSaveLoaded}`, theTextAreaContent);
-})
+
+  if (document.getElementById('saveList').childElementCount < 2) {
+    let newTabNumber = localStorage.length;
+
+    localStorage.setItem(`smartsong-save196234-${newTabNumber}`, "");
+
+    let anchorTag = document.createElement('a');
+    anchorTag.href="#";
+
+    let divSaveNumber = document.createElement('div');
+    divSaveNumber.id = `save-${newTabNumber}`;
+    divSaveNumber.classList.add('save-list-item');
+    divSaveNumber.onclick = function(){
+      populateSavedContentOnSaveClick(newTabNumber);
+    }
+    divSaveNumber.innerText = `Song ${newTabNumber}`;
+
+    anchorTag.appendChild(divSaveNumber);
+    document.getElementById('saveList').appendChild(anchorTag);
+  }
+
+});
 
 //This function gets the word that the user clicks from the results and inserts it where the users cursor was last placed in the text area.
 function getClickedWord(wordId) {
@@ -178,10 +187,3 @@ document.getElementById('nextWordButton').addEventListener('click', function() {
 });
 
 //--------------------
-
-
-//get highlighted word and word to the left of highlighted word, assign to variables
-
-//pass higlighted word and word to left into function that fetches api results
-
-//use template string to pass all results into scrolling results div
