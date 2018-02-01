@@ -1,11 +1,40 @@
 
 function checkSavedContent() {
   //this function loops to check local storage for save names up to i. As long as the save names continue to be found, they are inserted in the save list for the user to select and have an inline onclick event attached to them. As soon as it returns null for one, break out of the loop which will stop population of the save list.
-  for (i = 1; i < 100; i++) {
-    if (localStorage.getItem(`smartsong-save196234-${i}`) === null) {
-      return;
-    } else {
-      document.getElementById('saveList').innerHTML += `<a href="#"><div id="save-${i}" class="save-list-item" onclick="populateSavedContentOnSaveClick(${i})">Song ${i}</div></a>`;
+
+  for (i = 0; i < Object.keys(localStorage).length; i++) {
+
+    let storageKey = Object.keys(localStorage)[i];
+    let lastCharacterOfStorageKey = storageKey[storageKey.length - 1];
+
+    if (storageKey.includes('smartsong-save196234-')) {
+
+      let anchorTag = document.createElement('a');
+      anchorTag.href="#";
+
+      let divSaveNumber = document.createElement('div');
+      divSaveNumber.id = `save-${lastCharacterOfStorageKey}`;
+      divSaveNumber.classList.add('save-list-item');
+      divSaveNumber.onclick = function(){
+        populateSavedContentOnSaveClick(lastCharacterOfStorageKey);
+      }
+      divSaveNumber.innerText = `Song ${lastCharacterOfStorageKey}`;
+
+      let closeTabDiv = document.createElement('div');
+      closeTabDiv.id = `closeTab-${lastCharacterOfStorageKey}`;
+      closeTabDiv.innerText = "X";
+      closeTabDiv.onclick = function closeTabFunction() {
+        localStorage.removeItem(`smartsong-save196234-${lastCharacterOfStorageKey}`);
+        let theSaveList = document.getElementById('saveList');
+        theSaveList.removeChild(document.getElementById(`save-${lastCharacterOfStorageKey}`));
+      };
+
+      closeTabDiv.style.width = "10px";
+      closeTabDiv.style.display = "inline-block";
+
+      anchorTag.appendChild(closeTabDiv);
+      divSaveNumber.appendChild(anchorTag);
+      document.getElementById('saveList').appendChild(divSaveNumber);
     }
   }
 }
@@ -29,10 +58,26 @@ document.getElementById('createNewTab').addEventListener('click', function(){
     }
     divSaveNumber.innerText = `Song ${newTabNumber}`;
 
-    anchorTag.appendChild(divSaveNumber);
-    document.getElementById('saveList').appendChild(anchorTag);
+    let closeTabDiv = document.createElement('div');
+    closeTabDiv.id = `closeTab-${newTabNumber}`;
+    closeTabDiv.innerText = "X";
+    closeTabDiv.onclick = function closeTabFunction() {
+      localStorage.removeItem(`smartsong-save196234-${newTabNumber}`);
+      let theSaveList = document.getElementById('saveList');
+      console.log(newTabNumber);
+      theSaveList.removeChild(document.getElementById(`save-${newTabNumber}`));
+    };
+
+    closeTabDiv.style.width = "10px";
+    closeTabDiv.style.display = "inline-block";
+
+    anchorTag.appendChild(closeTabDiv);
+    divSaveNumber.appendChild(anchorTag);
+    document.getElementById('saveList').appendChild(divSaveNumber);
 
 });
+
+
 
 let lastSaveLoaded = 1;
 
