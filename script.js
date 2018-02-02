@@ -1,13 +1,16 @@
 
+
+localStorage.setItem('smartsong-save196234-0', "storage initialized");
+
 function checkSavedContent() {
-  //this function loops to check local storage for save names up to i. As long as the save names continue to be found, they are inserted in the save list for the user to select and have an inline onclick event attached to them. As soon as it returns null for one, break out of the loop which will stop population of the save list.
+  //this function loops to check local storage for save names. As long as the save names continue to be found, they are inserted in the save list for the user to select and have an inline onclick event attached to them. As soon as it returns null for one, break out of the loop which will stop population of the save list.
 
   for (i = 0; i < Object.keys(localStorage).length; i++) {
 
-    let storageKey = Object.keys(localStorage)[i];
-    let lastCharacterOfStorageKey = storageKey[storageKey.length - 1];
+    let storageKey = `smartsong-save196234-${i}`;
+    let lastCharacterOfStorageKey = storageKey.slice('21');
 
-    if (storageKey.includes('smartsong-save196234-')) {
+    if (storageKey.includes('smartsong-save196234-') && storageKey !== "smartsong-save196234-0" && localStorage.getItem(storageKey) !== "deleted") {
 
       let anchorTag = document.createElement('a');
       anchorTag.href="#";
@@ -22,9 +25,10 @@ function checkSavedContent() {
 
       let closeTabDiv = document.createElement('div');
       closeTabDiv.id = `closeTab-${lastCharacterOfStorageKey}`;
-      closeTabDiv.innerText = "X";
+      closeTabDiv.classList.add('close-tab-div');
+      closeTabDiv.innerText = "x";
       closeTabDiv.onclick = function closeTabFunction() {
-        localStorage.removeItem(`smartsong-save196234-${lastCharacterOfStorageKey}`);
+        localStorage.setItem(`smartsong-save196234-${lastCharacterOfStorageKey}`, "deleted");
         let theSaveList = document.getElementById('saveList');
         theSaveList.removeChild(document.getElementById(`save-${lastCharacterOfStorageKey}`));
       };
@@ -43,7 +47,9 @@ checkSavedContent();
 //Add click listener to plus tab, loop over current local storage keys from least to greatest, once one is not found, create a slot in storage from which a tab will be created.
 document.getElementById('createNewTab').addEventListener('click', function(){
 
-    let newTabNumber = localStorage.length + 1;
+    let newTabNumber = localStorage.length - 1;
+
+    newTabNumber = Number(newTabNumber) + 1;
 
     localStorage.setItem(`smartsong-save196234-${newTabNumber}`, "");
 
@@ -60,12 +66,22 @@ document.getElementById('createNewTab').addEventListener('click', function(){
 
     let closeTabDiv = document.createElement('div');
     closeTabDiv.id = `closeTab-${newTabNumber}`;
-    closeTabDiv.innerText = "X";
+    closeTabDiv.classList.add('close-tab-div');
+    closeTabDiv.innerText = "x";
     closeTabDiv.onclick = function closeTabFunction() {
-      localStorage.removeItem(`smartsong-save196234-${newTabNumber}`);
+
+      localStorage.setItem(`smartsong-save196234-${newTabNumber}`, "deleted");
       let theSaveList = document.getElementById('saveList');
-      console.log(newTabNumber);
       theSaveList.removeChild(document.getElementById(`save-${newTabNumber}`));
+
+
+      for (i = 0; i < localStorage.length; i++) {
+        if (localStorage.getItem(`smartsong-save196234-${i}`) !== "deleted" && localStorage.getItem(`smartsong-save196234-${i}`) !== "storage initialized") {
+          document.forms.theForm.textInput.value = localStorage.getItem(`smartsong-save196234-${i}`);
+          break;
+        }
+      }
+
     };
 
     closeTabDiv.style.width = "10px";
@@ -75,6 +91,14 @@ document.getElementById('createNewTab').addEventListener('click', function(){
     divSaveNumber.appendChild(anchorTag);
     document.getElementById('saveList').appendChild(divSaveNumber);
 
+    let theTabs = document.getElementById('saveList').children;
+    for (i = 1; i < theTabs.length; i++) {
+      if (theTabs[i].style.backgroundColor !== "ghostwhite") {
+        theTabs[i].style.backgroundColor = "#D8D8D8";
+      }
+
+    }
+
 });
 
 
@@ -83,18 +107,34 @@ let lastSaveLoaded = 1;
 
 function populateSavedContentOnLoad() {
   //this function load save number 1 on document load
-  document.forms.theForm.textInput.value = localStorage.getItem(`smartsong-save196234-${lastSaveLoaded}`);
+  // document.forms.theForm.textInput.value = localStorage.getItem(`smartsong-save196234-${lastSaveLoaded}`);
+
+  for (i = 0; i < localStorage.length; i++) {
+    if (localStorage.getItem(`smartsong-save196234-${i}`) !== "deleted" && localStorage.getItem(`smartsong-save196234-${i}`) !== "storage initialized") {
+      document.forms.theForm.textInput.value = localStorage.getItem(`smartsong-save196234-${i}`);
+      break;
+    }
+  }
 }
 populateSavedContentOnLoad();
 
 function populateSavedContentOnSaveClick(numberPassedFromSaveList) {
   //this takes the dynamically created save number from the save list that the user clicked on and will retrieve that saved content from local storage and populate it into the text area for editing
   lastSaveLoaded = numberPassedFromSaveList;
+
+  let theTabs = document.getElementById('saveList').children;
+  for (i = 1; i < theTabs.length; i++) {
+    theTabs[i].style.backgroundColor = "#D8D8D8";
+  }
+
+  document.getElementById(`save-${numberPassedFromSaveList}`).style.backgroundColor = "ghostwhite";
+
   document.forms.theForm.textInput.value = localStorage.getItem(`smartsong-save196234-${lastSaveLoaded}`);
 }
 
 //This event autosaves the tab contents to local storage every time the contents of the text area are changed. It uses the variable lastSaveLoaded to track which save was last clicked by the user to determine which local storage key to save the content to.
 document.forms.theForm.textInput.addEventListener('input', function() {
+
   let theTextAreaContent = document.forms.theForm.textInput.value;
   localStorage.setItem(`smartsong-save196234-${lastSaveLoaded}`, theTextAreaContent);
 
@@ -230,5 +270,3 @@ document.getElementById('nextWordButton').addEventListener('click', function() {
     });
 
 });
-
-//--------------------
